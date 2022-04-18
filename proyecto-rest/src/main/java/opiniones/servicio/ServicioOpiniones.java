@@ -1,0 +1,147 @@
+package opiniones.servicio;
+
+import java.time.LocalDateTime;
+
+import javax.jws.WebService;
+
+import opiniones.modelo.Opinion;
+import opiniones.modelo.Valoracion;
+import opiniones.repositorio.FactoriaRepositorioOpiniones;
+import opiniones.repositorio.RepositorioOpiniones;
+import opiniones.servicio.ListadoOpiniones.OpinionResumen;
+import repositorio.EntidadNoEncontrada;
+import repositorio.RepositorioException;
+
+@WebService(endpointInterface = "opiniones.servicio.IServicioOpiniones")
+public class ServicioOpiniones implements IServicioOpiniones {
+
+	private RepositorioOpiniones repositorio = FactoriaRepositorioOpiniones.getRepositorio();
+	
+	/** Patrón Singleton **/
+	
+	private static ServicioOpiniones instancia;
+
+	private ServicioOpiniones() {
+		
+	}
+	
+	public static ServicioOpiniones getInstancia() {
+
+		if (instancia == null)
+			instancia = new ServicioOpiniones();
+
+		return instancia;
+	}
+	
+	
+	@Override
+	public String create(Opinion opinion) throws RepositorioException {
+		
+		// Control de integridad de los datos
+		
+		// 1. Campos obligatorios
+		if (opinion.getUrlRecurso() == null || opinion.getUrlRecurso().isEmpty())
+			throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
+		
+		if (opinion.getValoraciones() == null)
+			throw new IllegalArgumentException("valoraciones: no debe ser una coleccion nula");
+		
+		for (Valoracion valoracion : opinion.getValoraciones()) {
+			if (valoracion.getEmail() == null || valoracion.getEmail().isEmpty())
+				throw new IllegalArgumentException("opcion, email: no debe ser nulo ni vacio");
+		
+			if (valoracion.getNota() < 1 || valoracion.getNota() > 5)
+				throw new IllegalArgumentException("nota: no debe ser mayor que 5 ni menor que 1");
+
+			if(valoracion.getFechaCreacion()==null) 
+				throw new IllegalArgumentException("fecha: no debe ser nulo");
+			
+			/* Sí puede ser nulo o vacío
+			 * if (valoracion.getComentario() == null ||
+			 * valoracion.getComentario().isEmpty()) throw new
+			 * IllegalArgumentException("comentario: no debe ser nulo ni vacio");
+			 */
+		}
+		
+		String id = repositorio.add(opinion);
+		
+		return id;
+	}
+
+	
+	  @Override public Valoracion haValorado(String id, String email) throws
+	  RepositorioException, EntidadNoEncontrada {
+	  
+	  if (email == null || email.isEmpty()) throw new
+	  IllegalArgumentException("email: no debe ser nulo ni vacio");
+	  
+	  Opinion opinion = repositorio.getById(id);
+	  
+	  for (Valoracion v : opinion.getValoraciones()) if
+	  (v.getEmail().equals(email)) return v;
+	  
+	  return null;
+	  
+	  }
+	 
+
+	@Override
+	public void valorar(String urlRecurso, String email, int nota, String comentario) throws RepositorioException, EntidadNoEncontrada {
+				
+		Opinion opinion = repositorio.getByUrl(urlRecurso);
+		
+		if (nota < 1 || nota > 5 )
+			throw new IllegalArgumentException("nota: valor no valido");
+		
+		if (email == null || email.isEmpty())
+			throw new IllegalArgumentException("email: no debe ser nulo ni vacio");
+		Valoracion v = haValorado(urlRecurso, email);
+		if ( v != null)
+			opinion.getValoraciones().remove(v); //se reemplaza
+		
+		LocalDateTime fechaCreacion = LocalDateTime.now();
+		
+		v = new Valoracion();
+		v.setEmail(email);
+		v.setFechaCreacion(fechaCreacion);
+		if(comentario!=null)v.setComentario(comentario);
+		opinion.getValoraciones().add(v);
+		
+		repositorio.update(opinion);
+		
+	}
+
+	@Override
+	public Opinion getById(String id) throws RepositorioException, EntidadNoEncontrada {
+		
+		return repositorio.getById(id);
+	}
+
+	@Override
+	public void remove(String id) throws RepositorioException, EntidadNoEncontrada {
+		
+		Opinion encuesta = repositorio.getById(id);
+		
+		repositorio.delete(encuesta);
+		
+	}
+
+	@Override
+	public ListadoOpiniones getListadoResumen() throws RepositorioException, EntidadNoEncontrada {
+		// TODO Adaptar a opinion
+		ListadoOpiniones listado = new ListadoOpiniones();
+		
+		for (Opinion opinion : repositorio.getAll()) {
+			OpinionResumen resumen = new OpinionResumen();
+			resumen.setId(opinion.getId().toString());
+			//resumen.setTitulo(opinion.getTitulo());
+			
+			listado.getOpiniones().add(resumen);
+			
+		}
+		
+		
+		return listado;
+	}
+
+}
