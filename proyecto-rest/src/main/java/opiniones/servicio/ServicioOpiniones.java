@@ -104,11 +104,16 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		v = new Valoracion();
 		v.setEmail(email);
 		v.setFechaCreacion(fechaCreacion);
-		if(comentario!=null)v.setComentario(comentario);
+		if(comentario!=null&&!comentario.isEmpty())v.setComentario(comentario);
 		opinion.getValoraciones().add(v);
 		
 		repositorio.update(opinion);
 		
+	}
+	
+	//Overload
+	public void valorar(String urlRecurso, String email, int nota) throws RepositorioException, EntidadNoEncontrada {
+		valorar(urlRecurso, email, nota, "");
 	}
 
 	@Override
@@ -116,14 +121,24 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		
 		return repositorio.getById(id);
 	}
+	
+	@Override
+	public Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada {
+		return repositorio.getByUrl(urlRecurso);
+	}
 
 	@Override
 	public void remove(String id) throws RepositorioException, EntidadNoEncontrada {
 		
-		Opinion encuesta = repositorio.getById(id);
+		Opinion opinion = repositorio.getById(id);
 		
-		repositorio.delete(encuesta);
+		repositorio.delete(opinion);
 		
+	}
+	
+	@Override
+	public void removeByUrl(String urlRecurso) throws EntidadNoEncontrada, RepositorioException{
+		repositorio.delete(repositorio.getByUrl(urlRecurso));
 	}
 
 	@Override

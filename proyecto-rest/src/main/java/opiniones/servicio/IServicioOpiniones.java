@@ -26,4 +26,8 @@ public interface IServicioOpiniones {
 			throws RepositorioException, EntidadNoEncontrada;
 
 	Valoracion haValorado(String id, String email) throws RepositorioException, EntidadNoEncontrada;
+
+	Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada;
+
+	void removeByUrl(String urlRecurso) throws EntidadNoEncontrada, RepositorioException;
 }
