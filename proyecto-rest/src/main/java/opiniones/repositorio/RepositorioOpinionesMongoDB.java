@@ -30,7 +30,7 @@ public class RepositorioOpinionesMongoDB implements RepositorioOpiniones {
 		
 		// TODO: cadena de conexión
 		
-		String uriString = "mongodb+srv://malew:<password>@cluster0.y5vc0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+		String uriString = "mongodb+srv://malew:arso@cluster0.y5vc0.mongodb.net/arso?retryWrites=true&w=majority";
 		ConnectionString connectionString = new ConnectionString(uriString);
 
 		CodecRegistry pojoCodecRegistry = CodecRegistries

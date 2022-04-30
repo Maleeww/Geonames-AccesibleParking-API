@@ -6,7 +6,7 @@ public class FactoriaRepositorioCiudades {
 	private static final String PROPIEDAD_IMPLEMENTACION = "ciudad";
 
 	private static RepositorioCiudades repository = null;
-
+ //
 	public static RepositorioCiudades getRepositorio() {
 
 		if (repository == null) {

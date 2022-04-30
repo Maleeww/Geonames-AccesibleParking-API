@@ -20,7 +20,7 @@ public class FactoriaRepositorioOpiniones {
 						.getConstructor().newInstance();
 			} catch (Exception e) {
 				// Implementación por defecto
-				repository = new RepositorioOpinionesXML();
+				repository = new RepositorioOpinionesMongoDB();
 			}
 
 		}

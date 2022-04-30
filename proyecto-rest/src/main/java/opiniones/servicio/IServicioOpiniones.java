@@ -24,6 +24,8 @@ public interface IServicioOpiniones {
 
 	void valorar(String urlRecurso, String email, int nota, String comentario)
 			throws RepositorioException, EntidadNoEncontrada;
+	void valorar(String urlRecurso, String email, int nota)
+			throws RepositorioException, EntidadNoEncontrada;
 
 	Valoracion haValorado(String id, String email) throws RepositorioException, EntidadNoEncontrada;
 
