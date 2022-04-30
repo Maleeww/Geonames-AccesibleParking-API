@@ -20,8 +20,6 @@ public interface IServicioOpiniones {
 	
 	void remove(String id) throws RepositorioException, EntidadNoEncontrada;
 	
-	ListadoOpiniones getListadoResumen() throws RepositorioException, EntidadNoEncontrada;
-
 	void valorar(String urlRecurso, String email, int nota, String comentario)
 			throws RepositorioException, EntidadNoEncontrada;
 	void valorar(String urlRecurso, String email, int nota)

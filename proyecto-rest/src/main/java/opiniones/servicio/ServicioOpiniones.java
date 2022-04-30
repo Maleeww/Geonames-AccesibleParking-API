@@ -124,6 +124,9 @@ public class ServicioOpiniones implements IServicioOpiniones {
 	
 	@Override
 	public Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada {
+		if (urlRecurso == null || urlRecurso.isEmpty())
+			throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
+		
 		return repositorio.getByUrl(urlRecurso);
 	}
 
@@ -138,25 +141,11 @@ public class ServicioOpiniones implements IServicioOpiniones {
 	
 	@Override
 	public void removeByUrl(String urlRecurso) throws EntidadNoEncontrada, RepositorioException{
+		if (urlRecurso == null || urlRecurso.isEmpty())
+			throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
+		
 		repositorio.delete(repositorio.getByUrl(urlRecurso));
 	}
 
-	@Override
-	public ListadoOpiniones getListadoResumen() throws RepositorioException, EntidadNoEncontrada {
-		// TODO Adaptar a opinion
-		ListadoOpiniones listado = new ListadoOpiniones();
-		
-		for (Opinion opinion : repositorio.getAll()) {
-			OpinionResumen resumen = new OpinionResumen();
-			resumen.setId(opinion.getId().toString());
-			//resumen.setTitulo(opinion.getTitulo());
-			
-			listado.getOpiniones().add(resumen);
-			
-		}
-		
-		
-		return listado;
-	}
 
 }
