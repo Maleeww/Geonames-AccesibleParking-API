@@ -9,7 +9,6 @@ import opiniones.modelo.Opinion;
 import opiniones.modelo.Valoracion;
 import opiniones.repositorio.FactoriaRepositorioOpiniones;
 import opiniones.repositorio.RepositorioOpiniones;
-import opiniones.servicio.ListadoOpiniones.OpinionResumen;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 

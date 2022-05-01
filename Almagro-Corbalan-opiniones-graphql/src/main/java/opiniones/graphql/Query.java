@@ -1,19 +1,17 @@
-package encuestas.graphql;
-
-import java.util.List;
+package opiniones.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
-import encuestas.modelo.Encuesta;
-import encuestas.servicio.ServicioEncuestas;
+import opiniones.modelo.Opinion;
+import opiniones.servicio.ServicioOpiniones;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 
 public class Query implements GraphQLRootResolver {
     
-    public Encuesta getEncuesta(String id) 
+    public Opinion getByUrl(String url) 
     		throws RepositorioException, EntidadNoEncontrada {
         
-    	return ServicioEncuestas.getInstancia().getById(id);
+    	return ServicioOpiniones.getInstancia().getByUrl(url);
     }
 }

@@ -1,41 +1,38 @@
-package encuestas.graphql;
-
-import java.time.LocalDateTime;
-import java.util.List;
+package opiniones.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLRootResolver;
 
-import encuestas.modelo.Encuesta;
-import encuestas.modelo.Opcion;
-import encuestas.servicio.ServicioEncuestas;
+import opiniones.servicio.ServicioOpiniones;
+import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 
-
 public class Mutation implements GraphQLRootResolver {
-    
-    public Encuesta crearEncuesta(String titulo, 
-    		String instruccion, 
-    		String apertura,
-    		String cierre,
-    		List<String> opciones) throws RepositorioException {
-        
-    	Encuesta encuesta = new Encuesta();
-    	encuesta.setTitulo(titulo);
-    	encuesta.setInstruccion(instruccion);
-    	encuesta.setApertura(LocalDateTime.parse(apertura));
-    	encuesta.setCierre(LocalDateTime.parse(cierre));
-    	
-    	for (String opcionTexto : opciones) {
-    		Opcion opcion = new Opcion();
-    		opcion.setTexto(opcionTexto);
-    		encuesta.getOpciones().add(opcion);    		
-    	}
-    	
-    	String id = ServicioEncuestas.getInstancia().create(encuesta);
-    
-    	encuesta.setIdentificador(id);
-    	
-    	return encuesta;
-    	
-    }
+
+	public String create(String urlRecurso) throws RepositorioException, EntidadNoEncontrada {
+
+//    	Opinion opinion = new Opinion();
+//    	opinion.setUrlRecurso(urlRecurso);
+//    	opinion.setValoraciones(new LinkedList<Valoracion>());
+
+		String id = ServicioOpiniones.getInstancia().create(urlRecurso);
+
+		return id;
+	}
+
+	public boolean valorar(String urlRecurso, String email, int nota, String comentario)
+			throws RepositorioException, EntidadNoEncontrada {
+
+		if (comentario == null || comentario.isEmpty())
+			ServicioOpiniones.getInstancia().valorar(urlRecurso, email, nota);
+		else
+			ServicioOpiniones.getInstancia().valorar(urlRecurso, email, nota);
+
+		return true;
+	}
+
+	public boolean removeByUrl(String url) throws EntidadNoEncontrada, RepositorioException {
+		ServicioOpiniones.getInstancia().removeByUrl(url);
+		return true;
+	}
+
 }

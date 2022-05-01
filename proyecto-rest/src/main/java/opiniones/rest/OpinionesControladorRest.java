@@ -3,9 +3,7 @@ package opiniones.rest;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
-import java.util.LinkedList;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -16,13 +14,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
-import org.bson.types.ObjectId;
 
 import opiniones.modelo.Opinion;
-import opiniones.modelo.Valoracion;
 import opiniones.servicio.IServicioOpiniones;
 import opiniones.servicio.ServicioOpiniones;
 import repositorio.EntidadNoEncontrada;

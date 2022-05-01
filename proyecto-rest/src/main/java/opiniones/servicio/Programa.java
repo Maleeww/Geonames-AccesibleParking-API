@@ -1,16 +1,12 @@
 package opiniones.servicio;
 
-import java.net.URL;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.time.LocalDateTime;
-import java.util.Collections;
+
 import java.util.LinkedList;
 
 import opiniones.modelo.Opinion;
 import opiniones.repositorio.FactoriaRepositorioOpiniones;
 import opiniones.repositorio.RepositorioOpiniones;
-import opiniones.repositorio.RepositorioOpinionesMongoDB;
 
 public class Programa {
 

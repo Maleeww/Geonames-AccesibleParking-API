@@ -12,7 +12,7 @@ type Valoracion {
 }
 
 type Query {
-  getByUrl(url: String!): Opinion!
+  getByUrl(url: String!): Opinion
 }
 
 type Mutation {

@@ -1,4 +1,4 @@
-package encuestas.graphql;
+package opiniones.graphql;
 
 import javax.servlet.annotation.WebServlet;
 
