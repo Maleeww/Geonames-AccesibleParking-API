@@ -1,0 +1,27 @@
+type Opinion {
+  id: String!
+  urlRecurso: String!
+  Valoraciones: [Valoracion]! 
+}
+
+type Valoracion {
+ email: String!
+ fechaCreacion: String!
+ nota: Int!
+ comentario: String
+}
+
+type Query {
+  getByUrl(url: String!): Opinion!
+}
+
+type Mutation {
+  create(url: String!): String!
+  valorar(urlRecurso: String!, email: String!, nota: Int!, comentario: String): Boolean
+  removeByUrl(url: String!): Boolean
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
