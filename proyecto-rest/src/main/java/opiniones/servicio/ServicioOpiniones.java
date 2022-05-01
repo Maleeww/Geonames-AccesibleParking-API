@@ -1,6 +1,7 @@
 package opiniones.servicio;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 
 import javax.jws.WebService;
 
@@ -35,47 +36,54 @@ public class ServicioOpiniones implements IServicioOpiniones {
 	
 	
 	@Override
-	public String create(Opinion opinion) throws RepositorioException {
+	public String create(String url) throws RepositorioException {
 		
 		// Control de integridad de los datos
 		
-		// 1. Campos obligatorios
-		if (opinion.getUrlRecurso() == null || opinion.getUrlRecurso().isEmpty())
-			throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
-		
-		if (opinion.getValoraciones() == null)
-			throw new IllegalArgumentException("valoraciones: no debe ser una coleccion nula");
-		
-		for (Valoracion valoracion : opinion.getValoraciones()) {
-			if (valoracion.getEmail() == null || valoracion.getEmail().isEmpty())
-				throw new IllegalArgumentException("opcion, email: no debe ser nulo ni vacio");
-		
-			if (valoracion.getNota() < 1 || valoracion.getNota() > 5)
-				throw new IllegalArgumentException("nota: no debe ser mayor que 5 ni menor que 1");
+		if(url == null || url.isEmpty()) throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
 
-			if(valoracion.getFechaCreacion()==null) 
-				throw new IllegalArgumentException("fecha: no debe ser nulo");
-			
+		Opinion op = new Opinion();
+		op.setUrlRecurso(url);
+		op.setValoraciones(new LinkedList<Valoracion>());
+		
+		// 1. Campos obligatorios
+		/*
+		 * if (opinion.getUrlRecurso() == null || opinion.getUrlRecurso().isEmpty())
+		 * throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
+		 * 
+		 * if (opinion.getValoraciones() == null) throw new
+		 * IllegalArgumentException("valoraciones: no debe ser una coleccion nula");
+		 * 
+		 * for (Valoracion valoracion : opinion.getValoraciones()) { if
+		 * (valoracion.getEmail() == null || valoracion.getEmail().isEmpty()) throw new
+		 * IllegalArgumentException("opcion, email: no debe ser nulo ni vacio");
+		 * 
+		 * if (valoracion.getNota() < 1 || valoracion.getNota() > 5) throw new
+		 * IllegalArgumentException("nota: no debe ser mayor que 5 ni menor que 1");
+		 * 
+		 * if(valoracion.getFechaCreacion()==null) throw new
+		 * IllegalArgumentException("fecha: no debe ser nulo");
+		 */
 			/* Sí puede ser nulo o vacío
 			 * if (valoracion.getComentario() == null ||
 			 * valoracion.getComentario().isEmpty()) throw new
 			 * IllegalArgumentException("comentario: no debe ser nulo ni vacio");
 			 */
-		}
+
 		
-		String id = repositorio.add(opinion);
-		
+		String id = repositorio.add(op);
+		System.out.println(op.toString());
 		return id;
 	}
 
 	
-	  @Override public Valoracion haValorado(String id, String email) throws
+	  @Override public Valoracion haValorado(String url, String email) throws
 	  RepositorioException, EntidadNoEncontrada {
 	  
 	  if (email == null || email.isEmpty()) throw new
 	  IllegalArgumentException("email: no debe ser nulo ni vacio");
 	  
-	  Opinion opinion = repositorio.getById(id);
+	  Opinion opinion = repositorio.getByUrl(url);
 	  
 	  for (Valoracion v : opinion.getValoraciones()) if
 	  (v.getEmail().equals(email)) return v;
@@ -95,15 +103,16 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		
 		if (email == null || email.isEmpty())
 			throw new IllegalArgumentException("email: no debe ser nulo ni vacio");
-		Valoracion v = haValorado(urlRecurso, email);
-		if ( v != null)
-			opinion.getValoraciones().remove(v); //se reemplaza
+		//Valoracion v = haValorado(urlRecurso, email);
+		//if ( v != null)
+		opinion.getValoraciones().removeIf(v -> v.getEmail().equals(email)); //se reemplaza
 		
 		LocalDateTime fechaCreacion = LocalDateTime.now();
 		
-		v = new Valoracion();
+		Valoracion v = new Valoracion();
 		v.setEmail(email);
-		v.setFechaCreacion(fechaCreacion);
+		v.setNota(nota);
+		v.setFechaCreacion(fechaCreacion.toString());
 		if(comentario!=null&&!comentario.isEmpty())v.setComentario(comentario);
 		opinion.getValoraciones().add(v);
 		

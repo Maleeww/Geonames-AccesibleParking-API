@@ -28,7 +28,7 @@ import opiniones.servicio.ServicioOpiniones;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 
-@Path("encuestas")
+@Path("opiniones")
 public class OpinionesControladorRest {
 
 	private IServicioOpiniones servicio = ServicioOpiniones.getInstancia();
@@ -68,13 +68,15 @@ public class OpinionesControladorRest {
 	@POST
 	public Response create(@FormParam("url")String paramurl) throws RepositorioException, UnsupportedEncodingException{
 		
-		Opinion opinion = new Opinion();
-		opinion.setUrlRecurso(URLDecoder.decode(paramurl, "UTF-8"));
-		opinion.setValoraciones(new LinkedList<>());
-		
-		String id = servicio.create(opinion);
+		/*
+		 * Opinion opinion = new Opinion();
+		 * opinion.setUrlRecurso(URLDecoder.decode(paramurl, "UTF-8"));
+		 * opinion.setValoraciones(new LinkedList<>());
+		 */
+		String decodedUrl = URLDecoder.decode(paramurl, "UTF-8");
+		String id = servicio.create(decodedUrl);
 				
-		URI url = uriInfo.getAbsolutePathBuilder().path(paramurl).build();
+		URI url = uriInfo.getAbsolutePathBuilder().path(decodedUrl).build();
 		
 		if(id==null) Response.seeOther(url).build();
 
@@ -94,7 +96,7 @@ public class OpinionesControladorRest {
 	}
 	
 	@POST
-	@Path("/{url}/valorar")
+	@Path("/{url}")
 	public Response valorar(@PathParam("url") String url,@FormParam("email") String email,@FormParam("nota") int nota,@FormParam("comentario") String comentario) throws RepositorioException, EntidadNoEncontrada {
 		
 		if(comentario==null||comentario.isEmpty())servicio.valorar(url, email, nota);

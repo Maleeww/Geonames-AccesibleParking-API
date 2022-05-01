@@ -10,7 +10,7 @@ import repositorio.RepositorioException;
 @WebService
 public interface IServicioOpiniones {
 
-	String create(Opinion opinion) throws RepositorioException;
+	public String create(String url) throws RepositorioException;
 	
 	//boolean haVotado(String id, String usuario) throws RepositorioException, EntidadNoEncontrada;
 	

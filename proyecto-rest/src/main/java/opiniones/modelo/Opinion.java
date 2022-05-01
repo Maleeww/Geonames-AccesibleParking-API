@@ -9,12 +9,14 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Opinion {
 	
-	// TODO: identificador
-	@JsonIgnore
-	@BsonId
+
+ 	@JsonSerialize(using = ToStringSerializer.class)
 	private ObjectId id;
 	private String urlRecurso;
 	private LinkedList<Valoracion> valoraciones = new LinkedList<>();
@@ -57,9 +59,9 @@ public class Opinion {
 	// Propiedad calculada
 
 	public double getMediaValoraciones() {
-		double media = 0;
+		double media = 0.0;
 		for(Valoracion v:valoraciones) {
-			media+=v.getNota();
+			media = media+ (1.0*v.getNota());
 		}
 		if(valoraciones.size()>0) return media/valoraciones.size();
 		else return media;
