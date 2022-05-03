@@ -1,5 +1,7 @@
 package opiniones.servicio;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.jws.WebService;
 
 import opiniones.modelo.Opinion;
@@ -27,7 +29,7 @@ public interface IServicioOpiniones {
 
 	Valoracion haValorado(String id, String email) throws RepositorioException, EntidadNoEncontrada;
 
-	Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada;
+	Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada, UnsupportedEncodingException;
 
 	void removeByUrl(String urlRecurso) throws EntidadNoEncontrada, RepositorioException;
 }

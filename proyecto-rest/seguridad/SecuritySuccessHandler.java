@@ -62,7 +62,7 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 		
 		Map<String, String> datosUsuario = new HashMap<String, String>();
 		datosUsuario.put("email", "marcos@um.es");
-		datosUsuario.put("rol", AvailableRoles.PROFESOR.toString());
+		datosUsuario.put("rol", AvailableRoles.USUARIO.toString());
 		
 		return datosUsuario;
 	}

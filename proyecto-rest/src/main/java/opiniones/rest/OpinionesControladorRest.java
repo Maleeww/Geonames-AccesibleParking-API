@@ -14,18 +14,24 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
 
 import opiniones.modelo.Opinion;
 import opiniones.servicio.IServicioOpiniones;
 import opiniones.servicio.ServicioOpiniones;
+import pasarela.zuul.seguridad.AvailableRoles;
+import pasarela.zuul.seguridad.Secured;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 
 @Path("opiniones")
 public class OpinionesControladorRest {
 
+	@Context
+	private SecurityContext securityContext;
+	
 	private IServicioOpiniones servicio = ServicioOpiniones.getInstancia();
 	
 	@Context
@@ -60,6 +66,7 @@ public class OpinionesControladorRest {
 
 	//@Produces(MediaType.APPLICATION_JSON)
 	//@Path("/{url}")
+	@Secured(AvailableRoles.ADMINISTRADOR)
 	@POST
 	public Response create(@FormParam("url")String paramurl) throws RepositorioException, UnsupportedEncodingException{
 		

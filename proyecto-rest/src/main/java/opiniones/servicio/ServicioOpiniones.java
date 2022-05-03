@@ -1,5 +1,7 @@
 package opiniones.servicio;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
@@ -131,11 +133,12 @@ public class ServicioOpiniones implements IServicioOpiniones {
 	}
 	
 	@Override
-	public Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada {
+	public Opinion getByUrl(String urlRecurso) throws EntidadNoEncontrada, UnsupportedEncodingException {
 		if (urlRecurso == null || urlRecurso.isEmpty())
 			throw new IllegalArgumentException("url: no debe ser nulo ni vacio");
 		
-		return repositorio.getByUrl(urlRecurso);
+		String decoded = URLDecoder.decode(urlRecurso, "UTF-8");
+		return repositorio.getByUrl(decoded);
 	}
 
 	@Override

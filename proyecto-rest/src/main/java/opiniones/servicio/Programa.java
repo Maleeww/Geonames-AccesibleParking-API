@@ -15,7 +15,9 @@ public class Programa {
 		
 		RepositorioOpiniones rep = FactoriaRepositorioOpiniones.getRepositorio();
 		Opinion opinion = new Opinion();
-		String paramurl = "localhost%3A8080%2Fapi%2Fciudades%2FLorca%2Fpuntos%2FCastillo_de_Lorca%2Faparcamientos%2F37.677385652447754_-1.7053383432526061";
+		//String paramurl = "localhost%3A8080%2Fapi%2Fciudades%2FLorca%2Fpuntos%2FCastillo_de_Lorca%2Faparcamientos%2F37.677385652447754_-1.7053383432526061";
+		String paramurl = "localhost%3A8080%2Fapi%2Fciudades%2FLorca%2Fpuntos%2FCastillo_de_Lorca%2Faparcamientos%2F37.677385652447754.-1.7053383432526061";
+		//String paramurl = "asd";
 		String decode = URLDecoder.decode(paramurl, "UTF-8");
 		opinion.setUrlRecurso(decode);
 		opinion.setValoraciones(new LinkedList<>());
