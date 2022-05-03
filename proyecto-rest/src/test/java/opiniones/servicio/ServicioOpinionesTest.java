@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class ServicioOpinionesTest {
 	}
 	
 	@Test
-	public void createOpinionUrl() throws RepositorioException, EntidadNoEncontrada {
+	public void createOpinionUrl() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 
 
 		serv.create(url);
@@ -107,7 +108,7 @@ public class ServicioOpinionesTest {
 	}
 
 	@Test
-	public void valorarOpinionValida() throws RepositorioException, EntidadNoEncontrada {
+	public void valorarOpinionValida() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 		Opinion o = new Opinion();
 		o.setUrlRecurso(url);
 		o.setValoraciones(new LinkedList<>());
@@ -120,7 +121,7 @@ public class ServicioOpinionesTest {
 	}
 	
 	@Test
-	public void valorarOpinionUsuarioDuplicado() throws RepositorioException, EntidadNoEncontrada {
+	public void valorarOpinionUsuarioDuplicado() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 		
 		serv.removeByUrl(url);
 		serv.create(url);
@@ -134,7 +135,7 @@ public class ServicioOpinionesTest {
 	}
 	
 	@Test
-	public void valorarOpinionMedia() throws RepositorioException, EntidadNoEncontrada {
+	public void valorarOpinionMedia() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 		serv.removeByUrl(url);
 		serv.create(url);
 
@@ -147,7 +148,7 @@ public class ServicioOpinionesTest {
 	}
 
 	@Test
-	public void getByUrl() throws RepositorioException, EntidadNoEncontrada {
+	public void getByUrl() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 		Opinion o = new Opinion();
 		o.setUrlRecurso(url);
 		o.setValoraciones(new LinkedList<>());
@@ -157,19 +158,19 @@ public class ServicioOpinionesTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getByUrlNullUrl() throws RepositorioException, EntidadNoEncontrada {
+	public void getByUrlNullUrl() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 
 		serv.getByUrl(null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void getByUrlEmptyUrl() throws RepositorioException, EntidadNoEncontrada {
+	public void getByUrlEmptyUrl() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 
 		serv.getByUrl("");
 	}
 
 	@Test(expected = EntidadNoEncontrada.class)
-	public void getByUrlNotFound() throws RepositorioException, EntidadNoEncontrada {
+	public void getByUrlNotFound() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 
 		serv.getByUrl("aaaa");
 	}
@@ -192,7 +193,7 @@ public class ServicioOpinionesTest {
 	}
 
 	@Test
-	public void removeByUrlTest() throws RepositorioException, EntidadNoEncontrada {
+	public void removeByUrlTest() throws RepositorioException, EntidadNoEncontrada, UnsupportedEncodingException {
 
 		serv.create(url);
 

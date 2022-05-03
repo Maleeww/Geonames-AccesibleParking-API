@@ -66,7 +66,7 @@ public class OpinionesControladorRest {
 
 	//@Produces(MediaType.APPLICATION_JSON)
 	//@Path("/{url}")
-	@Secured(AvailableRoles.ADMINISTRADOR)
+	//@Secured(AvailableRoles.ADMINISTRADOR)
 	@POST
 	public Response create(@FormParam("url")String paramurl) throws RepositorioException, UnsupportedEncodingException{
 		
