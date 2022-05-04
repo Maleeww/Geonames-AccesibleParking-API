@@ -12,6 +12,12 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import pasarela.zuul.beans.Usuario;
+import pasarela.zuul.repositorio.FactoriaRepositorioUsuarios;
+import pasarela.zuul.repositorio.RepositorioUsuarios;
+import pasarela.zuul.repositorio.RepositorioUsuariosMongoDB;
+import repositorio.EntidadNoEncontrada;
+
 @Component
 public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 	
@@ -34,7 +40,13 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 		
 		System.out.println(login);
 		
-		Map<String, String> datosUsuario = fetchUserInfo(login);
+		Map<String, String> datosUsuario;
+		try {
+			datosUsuario = fetchUserInfo(login);
+		} catch (EntidadNoEncontrada e) {
+			datosUsuario = null;
+			e.printStackTrace();
+		}
 		
 		// Si el usuario está registrado en el sistema, construye el token JWT con la información
 		
@@ -56,13 +68,19 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 	}
 
 	
-	private Map<String, String> fetchUserInfo(String userId) {
+	private Map<String, String> fetchUserInfo(String userId) throws EntidadNoEncontrada {
 		
 		// TODO: Recuperar la información de un servicio del sistema
 		
 		Map<String, String> datosUsuario = new HashMap<String, String>();
-		datosUsuario.put("email", "marcos@um.es");
-		datosUsuario.put("rol", AvailableRoles.PROFESOR.toString());
+		RepositorioUsuarios repo = FactoriaRepositorioUsuarios.getRepositorio();
+		Usuario usuario = repo.getByUserId(userId);
+		System.out.println("---------- Usuario: "+usuario.getUserId()+ " --- Rol: " +usuario.getRol().toString() + " --- Email: "+usuario.getEmail());
+		datosUsuario.put("usuario", usuario.getUserId());
+		datosUsuario.put("email", usuario.getEmail());
+		datosUsuario.put("rol", usuario.getRol().toString());
+		//datosUsuario.put("email", "marcos@um.es");
+		//datosUsuario.put("rol", AvailableRoles.PROFESOR.toString());
 		
 		return datosUsuario;
 	}

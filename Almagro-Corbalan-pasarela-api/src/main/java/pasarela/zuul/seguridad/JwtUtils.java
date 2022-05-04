@@ -33,7 +33,8 @@ public class JwtUtils {
 	    		   .setIssuer(ISSUER)
 	    		   .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 	    		   .setSubject(userId)
-	    		   .claim("usuario", userInfo.get("email"))
+	    		   .claim("usuario", userInfo.get("usuario")) //.claim("usuario", userInfo.get("email"))
+
 	    		   .claim("rol", userInfo.get("rol"))
 	    		   .signWith(signatureAlgorithm, signingKey)
 	    		   .compact();		
