@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.w3.org/2005/Atom"
+	xmlns:tns="http://www.w3.org/2005/Atom" elementFormDefault="qualified">
+
+	<element name="feed">
+		<complexType>
+			<sequence>
+				<element name="id" type="string"></element>
+				<element name="title" type="string"></element>
+				<element name="updated" type="dateTime"></element>
+				<element name="author">
+                    <complexType>
+                        <all>
+                            <element name="name" type="string"></element>
+                        </all>
+                    </complexType>
+                </element>
+
+ 				<element name="entry" minOccurs="1" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="id" type="string"></element>
+							<element name="title"></element>
+							<element name="updated" type="dateTime"></element>
+							<element name="content"></element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+
+		</complexType>
+	</element>
+
+</schema>

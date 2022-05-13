@@ -5,8 +5,16 @@ import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.spi.JsonbProvider;
 import javax.jws.WebService;
 
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+import opiniones.eventos.EventoValoracion;
 import opiniones.modelo.Opinion;
 import opiniones.modelo.Valoracion;
 import opiniones.repositorio.FactoriaRepositorioOpiniones;
@@ -34,6 +42,49 @@ public class ServicioOpiniones implements IServicioOpiniones {
 
 		return instancia;
 	}
+	
+	protected void notificarEvento(EventoValoracion evento) {
+
+		try {
+		ConnectionFactory factory = new ConnectionFactory();
+		// TODO uri
+
+		
+		String uri = "amqps://jwrctuai:nqs_d_DfoxuIANsa94_Vis2-TFNqDjYE@whale.rmq.cloudamqp.com/jwrctuai";
+		factory.setUri(uri);
+
+		Connection connection = factory.newConnection();
+
+		Channel channel = connection.createChannel();
+
+		/** Declaración del Exchange **/
+
+		final String exchangeName = "amq.direct";
+
+		boolean durable = true;
+		channel.exchangeDeclare(exchangeName, "direct", durable);
+
+		/** Envío del mensaje **/
+
+		Jsonb contexto = JsonbProvider.provider().create().build();
+
+		String cadenaJSON = contexto.toJson(evento);
+
+		String mensaje = cadenaJSON;
+
+		String routingKey = "arso";
+		channel.basicPublish(exchangeName, routingKey, new AMQP.BasicProperties.Builder()
+				.contentType("application/json")
+				.build(), mensaje.getBytes());
+
+		channel.close();
+		connection.close();
+		} catch(Exception e) {
+
+			throw new RuntimeException(e);
+		}
+	}
+
 	
 	
 	@Override
@@ -93,6 +144,8 @@ public class ServicioOpiniones implements IServicioOpiniones {
 	  
 	  }
 	 
+	  // curl -i -X POST --data "email=pepe@um.es&nota=5" http://localhost:8080/api/opiniones/localhost%3A8080%2Fapi%2Fciudades%2FLorca%2Fpuntos%2FCastillo_de_Lorca%2Faparcamientos%2F37.677385652447754_-1.7053383432526061
+
 
 	@Override
 	public void valorar(String urlRecurso, String email, int nota, String comentario) throws RepositorioException, EntidadNoEncontrada {
@@ -116,6 +169,13 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		v.setFechaCreacion(fechaCreacion.toString());
 		if(comentario!=null&&!comentario.isEmpty())v.setComentario(comentario);
 		opinion.getValoraciones().add(v);
+
+		EventoValoracion evento = new EventoValoracion();
+		evento.setMedia(opinion.getMediaValoraciones());
+		evento.setUrl(urlRecurso);
+		evento.setnumValoraciones(opinion.getNumValoraciones());
+		evento.setValoracion(v);
+		notificarEvento(evento);
 		
 		repositorio.update(opinion);
 		

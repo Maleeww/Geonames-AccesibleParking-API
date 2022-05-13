@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:ciudad codigoPostal="30800" nombre="Lorca" xmlns:tns="http://www.example.org/ciudad" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/ciudad ciudad.xsd ">
+  <tns:puntoInteres>
+    <tns:title>Palacio de los Condes de San Julián</tns:title>
+    <tns:longitud>-1.6988</tns:longitud>
+    <tns:latitud>37.6713</tns:latitud>
+  </tns:puntoInteres>
+  <tns:aparcamiento>
+    <tns:direccion>C/Amaltea Hotel del Polígono de los Peñones</tns:direccion>
+    <tns:longitud>-1.7114953133709605</tns:longitud>
+    <tns:latitud>37.65498859455905</tns:latitud>
+  </tns:aparcamiento>
+</tns:ciudad>

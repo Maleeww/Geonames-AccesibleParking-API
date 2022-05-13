@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.um.es/ciudad" 
+		xmlns:tns="http://www.um.es/ciudad" elementFormDefault="qualified">
+
+	<element name="ciudad">
+		<complexType>
+			<sequence>
+				<element name="puntoInteres" minOccurs="0" maxOccurs="unbounded" type="tns:puntoInteres"></element>
+
+				<element name="aparcamiento" minOccurs="0" maxOccurs="unbounded" type="tns:aparcamiento"></element>
+			</sequence>
+			<attribute name="nombre" type="string" use="required"></attribute>
+			<attribute name="codigoPostal" type="int" use="required"></attribute>
+			<attribute name="updated" type="dateTime" use="required"></attribute>
+		</complexType>
+	</element>
+
+	<complexType name="puntoInteres">
+		<sequence>
+			<element name="ciudad" type="string" />
+			<element name="title" type="string" />
+			<element name="wikiName" type="string" />
+			<element name="longitud" type="double" />
+			<element name="latitud" type="double" />
+			<element name="resumen" type="string" />
+			<element name="tipo" type="string" minOccurs="0" />
+			<element name="propietario" type="string" minOccurs="0" />
+		</sequence>
+	</complexType>
+
+	<complexType name="aparcamiento">
+		<sequence>
+			<element name="direccion" type="string" />
+			<element name="longitud" type="double" />
+			<element name="latitud" type="double" />
+			<element name="numeroValoraciones" type="int"></element>
+			<element name="calificacionMedia" type="double" minOccurs="0"></element>
+			<element name="urlOpinion" type="string" minOccurs="0"></element>
+			
+		</sequence>
+	</complexType>
+</schema>

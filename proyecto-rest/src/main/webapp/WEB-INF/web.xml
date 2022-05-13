@@ -10,8 +10,9 @@
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>io.swagger.jaxrs.json,
-				io.swagger.jaxrs.listing, ciudades.rest, opiniones.rest</param-value>
-		</init-param>		
+				io.swagger.jaxrs.listing,
+				ciudades.rest, opiniones.rest</param-value>
+		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>
@@ -30,6 +31,13 @@
 			<param-value>/api</param-value>
 		</init-param>
 		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>rabbitmq-consumer</servlet-name>
+		<servlet-class>rabbitmq.Consumidor</servlet-class>
+		<load-on-startup>3</load-on-startup>
+
 	</servlet>
 
 	<servlet-mapping>

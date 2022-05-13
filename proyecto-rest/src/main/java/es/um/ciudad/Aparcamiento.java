@@ -2,7 +2,7 @@
 // Este archivo ha sido generado por la arquitectura JavaTM para la implantación de la referencia de enlace (JAXB) XML v2.3.0 
 // Visite <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
 // Todas las modificaciones realizadas en este archivo se perderán si se vuelve a compilar el esquema de origen. 
-// Generado el: 2022.04.10 a las 08:30:15 PM CEST 
+// Generado el: 2022.05.12 a las 12:14:02 PM CEST 
 //
 
 
@@ -27,6 +27,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="direccion" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="longitud" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
  *         &lt;element name="latitud" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
+ *         &lt;element name="numeroValoraciones" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
+ *         &lt;element name="calificacionMedia" type="{http://www.w3.org/2001/XMLSchema}double"/&gt;
+ *         &lt;element name="urlOpinion" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -39,7 +42,10 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "aparcamiento", propOrder = {
     "direccion",
     "longitud",
-    "latitud"
+    "latitud",
+    "numeroValoraciones",
+    "calificacionMedia",
+    "urlOpinion"
 })
 public class Aparcamiento {
 
@@ -47,6 +53,10 @@ public class Aparcamiento {
     protected String direccion;
     protected double longitud;
     protected double latitud;
+    protected int numeroValoraciones;
+    protected double calificacionMedia;
+    @XmlElement(required = true)
+    protected String urlOpinion;
 
     /**
      * Obtiene el valor de la propiedad direccion.
@@ -102,6 +112,62 @@ public class Aparcamiento {
      */
     public void setLatitud(double value) {
         this.latitud = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad numeroValoraciones.
+     * 
+     */
+    public int getNumeroValoraciones() {
+        return numeroValoraciones;
+    }
+
+    /**
+     * Define el valor de la propiedad numeroValoraciones.
+     * 
+     */
+    public void setNumeroValoraciones(int value) {
+        this.numeroValoraciones = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad calificacionMedia.
+     * 
+     */
+    public double getCalificacionMedia() {
+        return calificacionMedia;
+    }
+
+    /**
+     * Define el valor de la propiedad calificacionMedia.
+     * 
+     */
+    public void setCalificacionMedia(double value) {
+        this.calificacionMedia = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad urlOpinion.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getUrlOpinion() {
+        return urlOpinion;
+    }
+
+    /**
+     * Define el valor de la propiedad urlOpinion.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setUrlOpinion(String value) {
+        this.urlOpinion = value;
     }
 
 }
