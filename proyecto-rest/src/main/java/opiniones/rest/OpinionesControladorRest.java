@@ -66,7 +66,7 @@ public class OpinionesControladorRest {
 
 	//@Produces(MediaType.APPLICATION_JSON)
 	//@Path("/{url}")
-	//@Secured(AvailableRoles.ADMINISTRADOR)
+	@Secured(AvailableRoles.ADMINISTRADOR)
 	@POST
 	public Response create(@FormParam("url")String paramurl) throws RepositorioException, UnsupportedEncodingException{
 		
@@ -87,9 +87,10 @@ public class OpinionesControladorRest {
 	
 	@DELETE
 	@Path("/{url}")
+	@Secured(AvailableRoles.ADMINISTRADOR)
 	//@Path("/{id}") // URL?
 	//@Path("/{url:http://localhost:8080/api/ciudades/(Lorca|Malaga))/puntos/*.}")
-	public Response removeActividad(@PathParam("url") String url) throws Exception {
+	public Response removeByUrl(@PathParam("url") String url) throws Exception {
 
 		servicio.removeByUrl(url);
 
@@ -99,6 +100,7 @@ public class OpinionesControladorRest {
 	
 	@POST
 	@Path("/{url}")
+	@Secured(AvailableRoles.USUARIO)
 	public Response valorar(@PathParam("url") String url,@FormParam("email") String email,@FormParam("nota") int nota,@FormParam("comentario") String comentario) throws RepositorioException, EntidadNoEncontrada {
 		
 		if(comentario==null||comentario.isEmpty())servicio.valorar(url, email, nota);
@@ -115,6 +117,7 @@ public class OpinionesControladorRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{url}")
+	@Secured(AvailableRoles.USUARIO)
 	public Response getValoraciones(@PathParam("url") String url) throws Exception {
 		Opinion opinion = servicio.getByUrl(url);
 		//LinkedList<Valoracion> valoraciones = opinion.getValoraciones();

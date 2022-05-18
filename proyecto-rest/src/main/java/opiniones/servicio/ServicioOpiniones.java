@@ -175,6 +175,8 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		evento.setUrl(urlRecurso);
 		evento.setnumValoraciones(opinion.getNumValoraciones());
 		evento.setValoracion(v);
+		
+		
 		notificarEvento(evento);
 		
 		repositorio.update(opinion);
