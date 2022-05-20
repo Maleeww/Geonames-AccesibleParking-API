@@ -12,7 +12,7 @@ namespace Guias.Repositorio
     public interface RepositorioGuias : Repositorio<Guia, string>
     {
 
-        // Se pueden incluir métodos adicionales
+                public Guia GetByEmail(string email);
     }
 
     public class RepositorioGuiasMongoDB : RepositorioGuias

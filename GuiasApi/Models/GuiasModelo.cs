@@ -20,7 +20,7 @@ namespace Guias.Modelo {
 
 
         public int NumValoraciones{get;set;}
-        public string OpinonUrl{get;set;}
+        public string OpinionUrl{get;set;}
         public double MediaValoraciones{get;set;}
 
     }

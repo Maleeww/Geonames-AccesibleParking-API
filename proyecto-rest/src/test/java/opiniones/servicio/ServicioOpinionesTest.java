@@ -52,40 +52,6 @@ public class ServicioOpinionesTest {
 		System.out.println(opinion);
 	}
 
-	/*
-	 * @Test(expected = IllegalArgumentException.class) public void
-	 * createOpinionValoracionesNull() throws RepositorioException { Opinion o = new
-	 * Opinion(); o.setUrlRecurso("a"); o.setValoraciones(null);
-	 * 
-	 * serv.create(url); }
-	 * 
-	 * @Test(expected = IllegalArgumentException.class) public void
-	 * createOpinionValoracionEmailNull() throws RepositorioException { Opinion o =
-	 * new Opinion(); o.setUrlRecurso("a"); Valoracion v = new Valoracion();
-	 * v.setFechaCreacion(LocalDateTime.now()); v.setNota(2); v.setEmail(null);
-	 * LinkedList<Valoracion> valoraciones = new LinkedList<>();
-	 * valoraciones.add(v); o.setValoraciones(valoraciones);
-	 * 
-	 * serv.create(url); }
-	 * 
-	 * @Test(expected = IllegalArgumentException.class) public void
-	 * createOpinionValoracionFechaNull() throws RepositorioException { Opinion o =
-	 * new Opinion(); o.setUrlRecurso("a"); Valoracion v = new Valoracion();
-	 * v.setFechaCreacion(null); v.setNota(2); v.setEmail("jose@gmail.com");
-	 * LinkedList<Valoracion> valoraciones = new LinkedList<>();
-	 * valoraciones.add(v); o.setValoraciones(valoraciones);
-	 * 
-	 * serv.create(url); }
-	 * 
-	 * @Test(expected = IllegalArgumentException.class) public void
-	 * createOpinionValoracionNotaFueraRango() throws RepositorioException { Opinion
-	 * o = new Opinion(); o.setUrlRecurso("a"); Valoracion v = new Valoracion();
-	 * v.setFechaCreacion(LocalDateTime.now()); v.setNota(10);
-	 * v.setEmail("jose@gmail.com"); LinkedList<Valoracion> valoraciones = new
-	 * LinkedList<>(); valoraciones.add(v); o.setValoraciones(valoraciones);
-	 * 
-	 * serv.create(url); }
-	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void valorarOpinionValoracionNotaFueraRango() throws RepositorioException, EntidadNoEncontrada {
 		Opinion o = new Opinion();

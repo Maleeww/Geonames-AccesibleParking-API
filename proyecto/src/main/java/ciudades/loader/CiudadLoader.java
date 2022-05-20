@@ -17,9 +17,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import es.um.ciudad.Aparcamiento;
-import es.um.ciudad.Ciudad;
-import es.um.ciudad.PuntoInteres;
+import ciudades.bean.Aparcamiento;
+import ciudades.bean.Ciudad;
+import ciudades.bean.PuntoInteres;
 import sax.Manejador;
 
 public class CiudadLoader {

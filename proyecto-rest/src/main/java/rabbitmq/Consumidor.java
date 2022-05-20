@@ -47,7 +47,7 @@ public class Consumidor extends HttpServlet {
 
 		final String exchangeName = "amq.direct";
 		final String queueName = "q";
-		final String bindingKey = "arso";
+		final String bindingKey = "ciudades";
 
 		boolean durable = true;
 		boolean exclusive = false;
@@ -124,7 +124,5 @@ public class Consumidor extends HttpServlet {
 		    }
 		});
 		
-		 
-		System.out.println("consumidor esperando ...");
 		}
 	}

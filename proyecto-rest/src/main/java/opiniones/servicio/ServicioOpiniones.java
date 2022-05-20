@@ -43,7 +43,7 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		return instancia;
 	}
 	
-	protected void notificarEvento(EventoValoracion evento) {
+	protected void notificarEvento(EventoValoracion evento, Opinion op) {
 
 		try {
 		ConnectionFactory factory = new ConnectionFactory();
@@ -72,7 +72,9 @@ public class ServicioOpiniones implements IServicioOpiniones {
 
 		String mensaje = cadenaJSON;
 
-		String routingKey = "arso";
+		String routingKey = op.getUrlRecurso().split("/")[1];// de esta forma podremos implementar mas servicios
+																//y con la routingkey bindearemos distintas conexiones sin necesidad de modificar el productor
+		
 		channel.basicPublish(exchangeName, routingKey, new AMQP.BasicProperties.Builder()
 				.contentType("application/json")
 				.build(), mensaje.getBytes());
@@ -177,7 +179,7 @@ public class ServicioOpiniones implements IServicioOpiniones {
 		evento.setValoracion(v);
 		
 		
-		notificarEvento(evento);
+		notificarEvento(evento, opinion);
 		
 		repositorio.update(opinion);
 		

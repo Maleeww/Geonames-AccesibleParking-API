@@ -1,7 +1,14 @@
-
+using Guias.Modelo;
+using System;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+using System.Text.Json;
+using Guias.Repositorio;
 
 
 namespace Guias.Servicio {
+    public class Consumer{
 public static void RunConsumer()
         {
             var factory = new ConnectionFactory()
@@ -13,7 +20,7 @@ public static void RunConsumer()
 
             channel.QueueDeclare(queue: "dotnetq",durable: true,exclusive: false, autoDelete: false,arguments: null);
 
-            channel.QueueBind(queue: "dotnetq",exchange: "amq.direct",routingKey: "arso",arguments: null);
+            channel.QueueBind(queue: "dotnetq",exchange: "amq.direct",routingKey: "guias",arguments: null);
 
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, ea) =>
@@ -30,16 +37,17 @@ public static void RunConsumer()
             Console.WriteLine("Consumer running...");
         }
     
-    public static void handleEvento(String message){
+    public static void handleEvento(string message){
         
         EventoValoracion ev = JsonToEvento(message);
         RepositorioGuias repo = new RepositorioGuiasMongoDB();
 
-        string[] partes = evento.Url.Split("/api/guias/");
+        string[] partes = ev.Url.Split("/api/guias/");
+                string idd = partes[1];      //split con el ev.url
         Console.WriteLine("Consumidor : Valorado guia con id: "+idd);
 
 
-        string idd = partes[1];      //split con el evento.url
+
 
         Guia guia = repo.GetById(idd);
         guia.NumValoraciones = ev.NumValoraciones;
@@ -52,7 +60,8 @@ public static void RunConsumer()
 
     public static EventoValoracion JsonToEvento(string message){
         JsonSerializerOptions jso = new JsonSerializerOptions{PropertyNameCaseInsensitive=true};
-        EventoValoracion ev = JsonSerializer.Deserialize<EventoValoracion>(message,options);
+        EventoValoracion ev = JsonSerializer.Deserialize<EventoValoracion>(message,jso);
         return ev;
+    }
     }
 }

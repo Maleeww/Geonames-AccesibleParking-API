@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Services.RunConsumer;
+using Guias.Servicio;
 
 namespace GuiasApi
 {
@@ -14,7 +14,7 @@ namespace GuiasApi
     {
         public static void Main(string[] args)
         {
-            RunConsumer();
+            Consumer.RunConsumer();
             CreateHostBuilder(args).Build().Run();
         }
 

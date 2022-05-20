@@ -7,7 +7,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import es.um.ciudad.Aparcamiento;
+import ciudades.bean.Aparcamiento;
 
 
 public class Manejador extends DefaultHandler {

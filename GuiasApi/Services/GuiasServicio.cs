@@ -1,6 +1,7 @@
 
 using Guias.Modelo;
 using Guias.Repositorio;
+using System.Collections.Generic;
 
 namespace Guias.Servicio
 {
@@ -8,9 +9,12 @@ namespace Guias.Servicio
     public interface IServicioGuias
     {
 
-        public string Create(Guia guia);
+        //public string Create(Guia guia); (Es el alta)
         public Guia Get(string id);
-        public string AltaGuia(string email, string nombre);
+        public bool AddSitioInteres(string id, string urlSitio);
+            public bool RemoveSitioInteres(string id, string urlSitio);
+
+        public Guia AltaGuia(string correo, string nombre);
         public bool BajaGuia(string id);
         public List<Guia> GetGuiasSitio(string sitio);
     }
@@ -27,13 +31,14 @@ namespace Guias.Servicio
             this.repositorio = repositorio;
         }
 
-        public string AltaGuia(string email, string nombre)
+        public Guia AltaGuia(string correo, string nombre)
         {
-            Guia guia = repositorio.GetByEmail(email);
+            Guia guia = repositorio.GetByEmail(correo);
             if (guia != null) return guia;
 
-            guia = new Guia(email, nombre);
-            return repositorio.Add(guia);
+            guia = new Guia{Correo= correo, Nombre =nombre};
+            repositorio.Add(guia);
+            return guia;
         }
 
         public Guia Get(string id)
@@ -44,20 +49,21 @@ namespace Guias.Servicio
         public bool BajaGuia(string id)
         {
             Guia guia = repositorio.GetById(id);
-            if (guia != null) return repositorio.Delete(guia);
+            if (guia != null){ repositorio.Delete(guia);
+            return true;}
             return false;
         }
 
         public List<Guia> GetGuiasSitio(string sitio)
         {
             List<Guia> listaGuias = new List<Guia>();
-            foreach (Guia guia in repositorio.getAll())
+            foreach (Guia guia in repositorio.GetAll())
             {
                 if (guia.SitiosInteres.Contains(sitio)) listaGuias.Add(guia);
             }
             return listaGuias;
         }
-    }
+ 
 
     public bool AddSitioInteres(string id, string urlSitio)
     {
@@ -66,7 +72,7 @@ namespace Guias.Servicio
         if (guia.SitiosInteres.Contains(urlSitio)) return true;
         else
         {
-            guia.SitiosInteres.add(urlSitio);
+            guia.SitiosInteres.Add(urlSitio);
             repositorio.Update(guia);
             return true;
         }
@@ -77,11 +83,11 @@ namespace Guias.Servicio
         Guia guia = repositorio.GetById(id);
         if (guia==null) return false;
         if (guia.SitiosInteres.Contains(urlSitio)) 
-        {guia.SitiosInteres.Delete(urlSitio);
-        Repositorio.Update(guia);
+        {guia.SitiosInteres.Remove(urlSitio);
+        repositorio.Update(guia);
         }
         return true;
     }
 
-
+   }
 }
